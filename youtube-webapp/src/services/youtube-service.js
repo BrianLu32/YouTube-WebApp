@@ -1,4 +1,5 @@
 import { key } from '../../key.js'
+import SearchYouTubeInfo from '../model/youtube-info.ts';
 
 const YoutubeService = {
     test: async function() {
@@ -18,7 +19,10 @@ const YoutubeService = {
             // const response = await fetch(url, requestOptions);
             const response = await fetch(url);
 			const json = await response.json();
-            return json;
+            const results = json.items.map(
+                item => new SearchYouTubeInfo(item)
+            )
+            return results;
         } catch (error) {
             return console.error(error);
         }
