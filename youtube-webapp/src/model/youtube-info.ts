@@ -1,3 +1,5 @@
+import VideoInfo from "./video-info";
+
 type YouTubeId = {
   kind: string;
   videoId: string;
@@ -31,12 +33,14 @@ class SearchYouTubeInfo {
   etag: string;
   id: YouTubeId;
   snippet: YouTubeSnippet;
+  statistics?: VideoInfo;
 
   constructor(props: SearchYouTubeInfo) {
     this.kind = props.kind;
     this.etag = props.etag;
     this.id = props.id;
     this.snippet = props.snippet;
+    this.statistics = props.statistics;
   }
 }
 

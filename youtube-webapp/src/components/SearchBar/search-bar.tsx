@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import YoutubeService from '../../services/youtube-service.js'
-import SearchYouTubeInfo from "../../model/youtube-info.js";
+import SearchYouTubeInfo from '../../model/youtube-info';
 import SearchResults from '../SearchResult/search-result'
+import VideoInfo from '../../model/video-info';
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -17,8 +18,19 @@ export default function SearchBar() {
     setError(null);
 
     try {
-      const data = await YoutubeService.SearchYouTube(query);
-      setResults(data);
+      const youtubeSearchResults: SearchYouTubeInfo[] = await YoutubeService.SearchYouTube(query);
+
+      const videoIds: string = youtubeSearchResults.map((item: SearchYouTubeInfo) => item.id.videoId).join(",");
+      const videoDetails: VideoInfo[] = await YoutubeService.GetVideoInfo(videoIds);
+      const finalResult: SearchYouTubeInfo[] = youtubeSearchResults.map((searchSnippet: SearchYouTubeInfo) => {
+        const stats = videoDetails.find((video: VideoInfo) => video.id === searchSnippet.id.videoId);
+        return new SearchYouTubeInfo({
+          ...searchSnippet,
+          statistics: stats
+        });
+      });
+
+      setResults(finalResult);
     } catch (err) {
       console.error(err);
       setError("Something went wrong while fetching search results.");
