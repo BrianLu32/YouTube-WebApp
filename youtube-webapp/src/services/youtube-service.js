@@ -42,7 +42,7 @@ const YoutubeService = {
             const response = await fetch(url);
             const json = await response.json();
             const results = json.items.map(
-                item => new VideoInfo(item.statistics)
+                statistics => new VideoInfo(statistics)
             )
             return results;
         } catch (error) {

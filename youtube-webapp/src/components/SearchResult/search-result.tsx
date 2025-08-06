@@ -11,9 +11,10 @@ export default function SearchResults({ results }: Props) {
     <div>
       {results.map((item, index) => (
         <div key={index}>
+          <img src={item.snippet.thumbnails.default.url} alt="" />
           <h3>{item.snippet.title}</h3>
           <p>{item.snippet.description}</p>
-          <small>Video ID: {item.id.videoId}</small>
+          <small>Likes: {item.statistics?.statistics.likeCount} Views: {item.statistics?.statistics.viewCount}</small>
           <hr />
         </div>
       ))}
