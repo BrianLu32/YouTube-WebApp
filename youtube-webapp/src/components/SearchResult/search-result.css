@@ -1,0 +1,12 @@
+.searchResults {
+    padding: 2% 1%;
+    display: flex;
+}
+
+.searchResultsStatistics {
+    padding: 1% 0% 0% 1%;
+}
+
+.searchResultsStatistics h3 {
+    margin-bottom: 1%;
+}

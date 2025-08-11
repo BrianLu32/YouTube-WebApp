@@ -1,4 +1,6 @@
 import SearchBar from "../components/SearchBar/search-bar";
+import LinePlot from '../components/Test_D3/line-plot'
+import PieChartWrapper from "../components/PieChart/pie-chart-wrapper";
 
 function Header({ title }) {
   return <h1>{title ? title : 'Default title'}</h1>;
@@ -14,6 +16,9 @@ export default function HomePage() {
   return (
     <div>
       <SearchBar />
+      {/* <PieChart width={300} height={300}/> */}
+      <PieChartWrapper></PieChartWrapper>
+      {/* <LinePlot data={[200, 300, 200]}></LinePlot> */}
     </div>
   );
 }
