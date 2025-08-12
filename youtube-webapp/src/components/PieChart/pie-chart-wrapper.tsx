@@ -1,31 +1,30 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 
+import { Statistics } from "../../model/video-info";
+
 import PieChart from "./pie-chart";
 
-export default function PieChartWrapper() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [size, setSize] = useState({ width: 0, height: 0 });
+export interface PieChartProps {
+  YouTubeData: Statistics;
+  width: number;
+  height: number;
+}
 
-  useEffect(() => {
-    function updateSize() {
-      if (containerRef.current) {
-        const { width, height } = containerRef.current.getBoundingClientRect();
-        setSize({ width, height });
-      }
-    }
+export default function PieChartWrapper({YouTubeData, width, height}: PieChartProps) {
+  // Takes the smaller of the two to be the bounding size
+  var sizeLimiter: number = Math.min(width, height);
+  sizeLimiter *= 0.5; // Reduce the size by 10% to make the pie chart fit nicer
 
-    updateSize(); // initial size
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  const data = [
+    { label: "viewCount", value: Number(YouTubeData.viewCount) },
+    { label: "likeCount", value: Number(YouTubeData.likeCount) },
+    { label: "commentCount", value: Number(YouTubeData.commentCount) },
+  ]
 
   return (
-    <div ref={containerRef} style={{ width: "100%", height: "500px" }}>
-      {/* {size.width > 0 && (
-        // <PieChart data={data} width={size.width} height={size.height} />
-        // <PieChart width={size.width} height={size.height} />
-      )} */}
+    <div className="pieChartWrapper">
+      <PieChart data={data} width={sizeLimiter} height={sizeLimiter}/>
     </div>
   );
 }

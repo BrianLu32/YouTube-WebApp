@@ -22,11 +22,15 @@ export default function SearchBar() {
 
       const videoIds: string = youtubeSearchResults.map((item: SearchYouTubeInfo) => item.id.videoId).join(",");
       const videoDetails: VideoInfo[] = await YoutubeService.GetVideoInfo(videoIds);
+      const videoDetailsMap: Record<string, VideoInfo> = {};
+      videoDetails.forEach(video => {
+        videoDetailsMap[video.id] = video;
+      })
       const finalResult: SearchYouTubeInfo[] = youtubeSearchResults.map((searchSnippet: SearchYouTubeInfo) => {
         const stats = videoDetails.find((video: VideoInfo) => video.id === searchSnippet.id.videoId);
         return new SearchYouTubeInfo({
           ...searchSnippet,
-          statistics: stats
+          statistics: videoDetailsMap[searchSnippet.id.videoId]
         });
       });
 
@@ -58,7 +62,11 @@ export default function SearchBar() {
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <SearchResults results={results} />
+      {(results && results.length > 0) ? (
+        <SearchResults results={results} />
+      ) : (
+        <p>No Results Found</p>
+      )}
     </div>
   )
 }

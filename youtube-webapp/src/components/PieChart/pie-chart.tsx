@@ -2,28 +2,22 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 
-// type Stat = { label: string; value: number };
-
+interface PieChartData {
+  label: string;
+  value: number;
+}
 interface PieChartProps {
-  // data: Stat[];
+  data: PieChartData[];
   width: number;
   height: number;
 }
 
-export default function PieChart({width, height}: PieChartProps) {
+export default function PieChart({data, width, height}: PieChartProps) {
   const ref = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    const data = [
-      { label: "Likes", value: 120 },
-      { label: "Views", value: 500 },
-      { label: "Favorites", value: 30 },
-      { label: "Comments", value: 45 }
-    ];
+    console.log(data);
 
-    // const width = 300;
-    // const height = 300;
-    console.log(`width:${width}, height:${height}`);
     const radius = Math.min(width, height) / 2;
 
     // Clear old SVG content before rendering

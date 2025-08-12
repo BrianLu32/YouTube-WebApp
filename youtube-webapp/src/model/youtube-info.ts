@@ -33,7 +33,7 @@ class SearchYouTubeInfo {
   etag: string;
   id: YouTubeId;
   snippet: YouTubeSnippet;
-  statistics?: VideoInfo;
+  statistics: VideoInfo;
 
   constructor(props: SearchYouTubeInfo) {
     this.kind = props.kind;

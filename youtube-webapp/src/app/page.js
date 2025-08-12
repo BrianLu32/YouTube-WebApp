@@ -16,9 +16,6 @@ export default function HomePage() {
   return (
     <div>
       <SearchBar />
-      {/* <PieChart width={300} height={300}/> */}
-      <PieChartWrapper></PieChartWrapper>
-      {/* <LinePlot data={[200, 300, 200]}></LinePlot> */}
     </div>
   );
 }
