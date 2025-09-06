@@ -40,7 +40,7 @@ export default function SearchResults({ results }: Props) {
             <small>Likes: {item.statistics.statistics.likeCount}</small><br />
             <small>Views: {item.statistics.statistics.viewCount}</small>
           </div>
-          <PieChartWrapper YouTubeData={item.statistics.statistics}  width={size.width} height={size.height}></PieChartWrapper>
+          <PieChartWrapper YouTubeData={item.statistics.statistics} width={size.width} height={size.height}></PieChartWrapper>
         </div>
       ))}
     </div>

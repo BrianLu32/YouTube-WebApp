@@ -16,8 +16,6 @@ export default function PieChart({data, width, height}: PieChartProps) {
   const ref = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    console.log(data);
-
     const radius = Math.min(width, height) / 2;
 
     // Clear old SVG content before rendering
@@ -30,7 +28,10 @@ export default function PieChart({data, width, height}: PieChartProps) {
       .append("g")
       .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    // const color = d3.scaleOrdinal(d3.schemeCategory10);
+    const color = d3.scaleOrdinal<string>()
+      .domain(data.map(d => d.label))
+      .range(["#F2D080", "#80F29B", "#80F2E7"])
 
     const pie = d3.pie<{ label: string; value: number }>().value((d) => d.value);
 
