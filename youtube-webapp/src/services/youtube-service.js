@@ -20,7 +20,7 @@ const YoutubeService = {
     },
 
     SearchYouTube: async function(query) {
-        const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&order=viewCount&q=${query}&safeSearch=none&key=${key}`
+        const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=25&order=viewCount&q=${query}&safeSearch=none&key=${key}`
 
         try {
             const response = await fetch(url);
