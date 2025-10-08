@@ -35,7 +35,7 @@ export default function PieChartWrapper({YouTubeData, width, height}: PieChartPr
 
   return (
     <div className="pieChartWrapper">
-      <div onMouseOver={() => {setHover(true); console.log("Hover")}} onMouseLeave={() => {setHover(false); console.log("Off Hover")}}>
+      <div onMouseOver={() => setHover(true) } onMouseLeave={() => setHover(false) }>
         <PieChart data={pieData} width={sizeLimiter} height={sizeLimiter}/>
       </div>
       <div className={`pieChartCard ${ifHover ? "show": ""}`}>

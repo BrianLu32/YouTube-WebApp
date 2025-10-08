@@ -5,6 +5,8 @@ import YoutubeService from '../../services/youtube-service.js'
 import SearchYouTubeInfo from '../../model/youtube-info';
 import SearchResults from '../SearchResult/search-result'
 import VideoInfo from '../../model/video-info';
+import ChannelInfo from '../../model/channel-snippet';
+import { ChannelSnippet } from '../../model/channel-snippet';
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -21,16 +23,26 @@ export default function SearchBar() {
       const youtubeSearchResults: SearchYouTubeInfo[] = await YoutubeService.SearchYouTube(query);
 
       const videoIds: string = youtubeSearchResults.map((item: SearchYouTubeInfo) => item.id.videoId).join(",");
+      const channelIds: string = youtubeSearchResults.map((item:SearchYouTubeInfo) => item.snippet.channelId).join(",");
+
       const videoDetails: VideoInfo[] = await YoutubeService.GetVideoInfo(videoIds);
       const videoDetailsMap: Record<string, VideoInfo> = {};
-      videoDetails.forEach(video => {
-        videoDetailsMap[video.id] = video;
+      videoDetails.forEach(videoInfo => {
+        videoDetailsMap[videoInfo.id] = videoInfo;
       })
+
+      const videoChannelSnippets: ChannelInfo[] = await YoutubeService.GetChannel(channelIds);
+      const videoChannelSnippetMap: Record<string, ChannelInfo> = {};
+      videoChannelSnippets.forEach(channelInfo => {
+        videoChannelSnippetMap[channelInfo.id] = channelInfo;
+      })
+
       const finalResult: SearchYouTubeInfo[] = youtubeSearchResults.map((searchSnippet: SearchYouTubeInfo) => {
-        const stats = videoDetails.find((video: VideoInfo) => video.id === searchSnippet.id.videoId);
+        // const stats = videoDetails.find((video: VideoInfo) => video.id === searchSnippet.id.videoId);
         return new SearchYouTubeInfo({
           ...searchSnippet,
-          statistics: videoDetailsMap[searchSnippet.id.videoId]
+          statistics: videoDetailsMap[searchSnippet.id.videoId],
+          channel: videoChannelSnippetMap[searchSnippet.snippet.channelId]
         });
       });
 

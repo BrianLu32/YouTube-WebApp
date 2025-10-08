@@ -1,6 +1,7 @@
 import { key } from '../../key.js'
 import SearchYouTubeInfo from '../model/youtube-info.ts';
 import VideoInfo from '../model/video-info.ts';
+import ChannelInfo from '../model/channel-snippet.ts'
 
 const YoutubeService = {
     test: async function() {
@@ -47,6 +48,21 @@ const YoutubeService = {
             return results;
         } catch (error) {
             console.error(error);
+        }
+    },
+
+    GetChannel: async function(query) {
+        const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${query}&key=${key}`
+
+        try {
+            const response = await fetch(url);
+            const json = await response.json();
+            const results = json.items.map(
+                snippet => new ChannelInfo(snippet)
+            )
+            return results;
+        } catch (error) {
+            console.log(error);
         }
     }
 }

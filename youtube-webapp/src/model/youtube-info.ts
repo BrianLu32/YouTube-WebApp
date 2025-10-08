@@ -1,4 +1,5 @@
 import VideoInfo from "./video-info";
+import ChannelInfo from "./channel-snippet"
 
 type YouTubeId = {
   kind: string;
@@ -34,6 +35,7 @@ class SearchYouTubeInfo {
   id: YouTubeId;
   snippet: YouTubeSnippet;
   statistics: VideoInfo;
+  channel: ChannelInfo;
 
   constructor(props: SearchYouTubeInfo) {
     this.kind = props.kind;
@@ -41,6 +43,7 @@ class SearchYouTubeInfo {
     this.id = props.id;
     this.snippet = props.snippet;
     this.statistics = props.statistics;
+    this.channel = props.channel;
   }
 }
 

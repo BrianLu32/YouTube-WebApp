@@ -24,6 +24,11 @@ export default function SearchResults({ results }: Props) {
       }
     }
 
+    // const missingChannelThumbnails = results.filter(
+    //   item => !item.channel.snippet.thumbnails?.default
+    // );
+    // console.log(missingChannelThumbnails);
+
     updateSize(); // initial size
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
@@ -35,8 +40,14 @@ export default function SearchResults({ results }: Props) {
         <div ref={containerRef} key={index} className="searchResults">
           <img src={item.snippet.thumbnails.medium.url} alt="" />
           <div className="searchResultsStatistics">
-            <h3>{item.snippet.title}</h3>
-            <p>{item.snippet.description}</p>
+            <h2>{item.snippet.title}</h2>
+            <div className="searchResultsHeader">
+              <img src={item.channel.snippet.thumbnails.default.url} alt="" />
+              <div className="searchResultsHeaderText">
+                <h3>{item.channel.snippet.title}</h3>
+              </div>
+            </div>
+            {/* <p>{item.snippet.description}</p> */}
             <small>Likes: {item.statistics.statistics.likeCount}</small><br />
             <small>Views: {item.statistics.statistics.viewCount}</small>
           </div>
