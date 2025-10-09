@@ -10,7 +10,7 @@ type YouTubeThumbnailsRes = {
   high: YouTubeThumbnail;
 }
 
-export type ChannelSnippet = {
+export type ChannelInfo = {
   title: string;
   description: string;
   customUrl: string;
@@ -18,14 +18,14 @@ export type ChannelSnippet = {
   thumbnails: YouTubeThumbnailsRes;
 }
 
-class ChannelInfo {
+class Channel {
   id: string;
-  snippet: ChannelSnippet;
+  channelInfo: ChannelInfo;
 
-  constructor(props: ChannelInfo) {
+  constructor(props: any) {
     this.id = props.id;
-    this.snippet = props.snippet;
+    this.channelInfo = props.snippet;
   }
 }
 
-export default ChannelInfo;
+export default Channel;

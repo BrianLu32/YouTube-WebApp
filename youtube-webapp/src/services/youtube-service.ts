@@ -1,33 +1,17 @@
 import { key } from '../../key.js'
-import SearchYouTubeInfo from '../model/youtube-info.ts';
-import VideoInfo from '../model/video-info.ts';
-import ChannelInfo from '../model/channel-snippet.ts'
+import SearchYouTubeInfo from '../model/youtube-info';
+import VideoInfo from '../model/video-info';
+import Channel from '../model/channel-snippet'
 
 const YoutubeService = {
-    test: async function() {
-        const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&order=viewCount&q=surfing&safeSearch=none&key=${key}`
-
-        try {
-            const response = await fetch(url);
-			const json = await response.json();
-            const results = json.items.map(
-                item => new SearchYouTubeInfo(item)
-            )
-            return results;
-        } catch (error) {
-            console.error(error);
-            return [];
-        }
-    },
-
-    SearchYouTube: async function(query) {
+    SearchYouTube: async function(query: String) {
         const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=25&order=viewCount&q=${query}&safeSearch=none&key=${key}`
 
         try {
             const response = await fetch(url);
             const json = await response.json();
-            const results = json.items.map(
-                item => new SearchYouTubeInfo(item)
+            const results: SearchYouTubeInfo[] = json.items.map(
+                (item: SearchYouTubeInfo) => new SearchYouTubeInfo(item)
             )
             return results
         } catch (error) {
@@ -36,33 +20,35 @@ const YoutubeService = {
         }
     },
     
-    GetVideoInfo: async function(query) {
+    GetVideoInfo: async function(query: String) {
         const url = `https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=${query}&key=${key}`
 
         try {
             const response = await fetch(url);
             const json = await response.json();
-            const results = json.items.map(
-                statistics => new VideoInfo(statistics)
+            const results: VideoInfo[] = json.items.map(
+                (statistics: VideoInfo) => new VideoInfo(statistics)
             )
             return results;
         } catch (error) {
             console.error(error);
+            return [];
         }
     },
 
-    GetChannel: async function(query) {
+    GetChannel: async function(query: String) {
         const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${query}&key=${key}`
 
         try {
             const response = await fetch(url);
             const json = await response.json();
-            const results = json.items.map(
-                snippet => new ChannelInfo(snippet)
+            const results: Channel[] = json.items.map(
+                (snippet: Channel) => new Channel(snippet)
             )
             return results;
         } catch (error) {
             console.log(error);
+            return [];
         }
     }
 }

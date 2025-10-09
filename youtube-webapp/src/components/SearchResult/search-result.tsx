@@ -24,11 +24,6 @@ export default function SearchResults({ results }: Props) {
       }
     }
 
-    // const missingChannelThumbnails = results.filter(
-    //   item => !item.channel.snippet.thumbnails?.default
-    // );
-    // console.log(missingChannelThumbnails);
-
     updateSize(); // initial size
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
@@ -36,22 +31,23 @@ export default function SearchResults({ results }: Props) {
 
   return (
     <div>
-      {results.map((item, index) => (
+      {results.map((video, index) => (
         <div ref={containerRef} key={index} className="searchResults">
-          <img src={item.snippet.thumbnails.medium.url} alt="" />
+          <img src={video.videoInfo.thumbnails.medium.url} alt="" />
           <div className="searchResultsStatistics">
-            <h2>{item.snippet.title}</h2>
+            <h2>{video.videoInfo.title}</h2>
             <div className="searchResultsHeader">
-              <img src={item.channel.snippet.thumbnails.default.url} alt="" />
+              <img src={video.channel.channelInfo.thumbnails.default.url} alt="" 
+                crossOrigin="anonymous" referrerPolicy="no-referrer" />
               <div className="searchResultsHeaderText">
-                <h3>{item.channel.snippet.title}</h3>
+                <h3>{video.channel.channelInfo.title}</h3>
               </div>
             </div>
-            {/* <p>{item.snippet.description}</p> */}
-            <small>Likes: {item.statistics.statistics.likeCount}</small><br />
-            <small>Views: {item.statistics.statistics.viewCount}</small>
+            {/* <p>{video.snippet.description}</p> */}
+            <small>Likes: {video.statistics.likeCount}</small><br />
+            <small>Views: {video.statistics.viewCount}</small>
           </div>
-          <PieChartWrapper YouTubeData={item.statistics.statistics} width={size.width} height={size.height}></PieChartWrapper>
+          <PieChartWrapper YouTubeData={video.statistics} width={size.width} height={size.height}></PieChartWrapper>
         </div>
       ))}
     </div>

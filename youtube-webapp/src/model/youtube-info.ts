@@ -1,7 +1,7 @@
-import VideoInfo from "./video-info";
-import ChannelInfo from "./channel-snippet"
+import VideoStats from "./video-info";
+import Channel from "./channel-snippet"
 
-type YouTubeId = {
+type VideoId = {
   kind: string;
   videoId: string;
 };
@@ -18,7 +18,7 @@ type YouTubeThumbnailsRes = {
   high: YouTubeThumbnail;
 }
 
-type YouTubeSnippet = {
+type VideoInfo = {
   publishedAt: string;
   channelId: string;
   title: string;
@@ -32,16 +32,19 @@ type YouTubeSnippet = {
 class SearchYouTubeInfo {
   kind: string;
   etag: string;
-  id: YouTubeId;
-  snippet: YouTubeSnippet;
-  statistics: VideoInfo;
-  channel: ChannelInfo;
+  videoIdInfo: VideoId;
+  videoInfo: VideoInfo;
+  statistics: VideoStats;
+  channel: Channel;
 
-  constructor(props: SearchYouTubeInfo) {
+  constructor(props: any) {
     this.kind = props.kind;
     this.etag = props.etag;
-    this.id = props.id;
-    this.snippet = props.snippet;
+
+    // Handles the API call and the search results conversion
+    this.videoIdInfo = props.videoIdInfo ?? props.id;
+    this.videoInfo = props.videoInfo ?? props.snippet;
+
     this.statistics = props.statistics;
     this.channel = props.channel;
   }
